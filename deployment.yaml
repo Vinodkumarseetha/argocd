@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-nsfw-pipeline
+  namespace: dev-nsfw-pipeline
+spec:
+  selector:
+    matchLabels:
+      app: dev-nsfw-pipeline
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dev-nsfw-pipeline
+    spec:
+      containers:
+      - name: dev-nsfw-pipeline
+        image: 463877552462.dkr.ecr.us-east-1.amazonaws.com/nsfw-pipeline:latest
+        imagePullPolicy: Always
+        env:
+        - name: Build_Env
+          value: development
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "1024m"
+            memory: "2Gi"
+          requests:
+            cpu: "1024m"
+            memory: "2Gi"
